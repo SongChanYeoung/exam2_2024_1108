@@ -61,7 +61,7 @@ public class Main1107 {
             채우다(arr);
         }
         catch ( ArrayIndexOutOfBoundsException e ) {
-            System.out.println("작업이!! 정상종료 되지 않았습니다.");
+            System.out.println("작업이 정상종료 되지 않았습니다.");
         }
         for ( int i = 0; i < arr.length; i++) {
             System.out.println("arr[" + i +"] =>" + arr[i]);
