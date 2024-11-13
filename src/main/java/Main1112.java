@@ -1,16 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import dto.Article;
+import util.Util;
 
 class Main1112 {
+    static List<Article> articles = new ArrayList<>();
+
     public static void main(String[] args) {
         System.out.println("== 프로그램 시작 ==");
 
+        makeTestData();
+
         Scanner sc = new Scanner(System.in);
-
-        int lastArticleId = 0;
-
-        List<Article> articles = new ArrayList<>();
 
         while ( true ) {
             System.out.printf("명령어) ");
@@ -30,16 +32,16 @@ class Main1112 {
                     continue;
                 }
 
-                System.out.println("번호, 제목, 내용");
+                System.out.println("번호 |  제목  |  내용");
                 for ( int i = 0; i < articles.size(); i++ ) {
                     Article article = articles.get(i);
 
-                    System.out.printf("%d, %s, %s\n", article.id, article.title, article.body);
+                    System.out.printf("%3d | %6s | %6s\n", article.id, article.title, article.body);
 
                 }
             }
             else if ( command.equals("article write")) {
-                int id = lastArticleId + 1;
+                int id = articles.size() + 1;
                 String regDate = Util.getNowDateStr();
                 System.out.printf("제목 : ");
                 String title = sc.nextLine();
@@ -49,24 +51,13 @@ class Main1112 {
                 Article article = new Article(id, regDate, title, body);
                 articles.add(article);
 
-                lastArticleId = id;
-
                 System.out.printf("%d번 글이 생성되었습니다.\n", id);
             }
             else if ( command.startsWith("article detail ") ) {
                 String[] commandBits = command.split(" ");
                 int id = Integer.parseInt(commandBits[2]);
 
-                Article foundArticle = null;
-
-                for ( int i = 0; i < articles.size(); i++ ) {
-                    Article article = articles.get(i);
-
-                    if ( article.id == id ) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if ( foundArticle == null ) {
                     System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -82,16 +73,7 @@ class Main1112 {
                 String[] commandBits = command.split(" ");
                 int id = Integer.parseInt(commandBits[2]);
 
-                Article foundArticle = null;
-
-                for ( int i = 0; i < articles.size(); i++ ) {
-                    Article article = articles.get(i);
-
-                    if ( article.id == id ) {
-                        foundArticle = article;
-                        break;
-                    }
-                }
+                Article foundArticle = getArticleById(id);
 
                 if ( foundArticle == null ) {
                     System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -112,16 +94,7 @@ class Main1112 {
                 String[] commandBits = command.split(" ");
                 int id = Integer.parseInt(commandBits[2]);
 
-                int foundIndex = -1;
-
-                for ( int i = 0; i < articles.size(); i++ ) {
-                    Article article = articles.get(i);
-
-                    if ( article.id == id ) {
-                        foundIndex = i;
-                        break;
-                    }
-                }
+                int foundIndex = getArticleIndexById(id);
 
                 if ( foundIndex == -1 ) {
                     System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -139,19 +112,33 @@ class Main1112 {
 
         sc.close();
         System.out.println("== 프로그램 끝 ==");
-    }   git add
-}
+    }
 
-class Article {
-    int id;
-    String regDate;
-    String title;
-    String body;
+    private static void makeTestData() {
+        System.out.println("테스트를 위한 데이터를 생성합니다.");
 
-    public Article(int id, String regDate, String title, String body) {
-        this.id = id;
-        this.regDate = regDate;
-        this.title = title;
-        this.body = body;
+        articles.add(new Article(1, Util.getNowDateStr(), "제목1", "내용1"));
+        articles.add(new Article(2, Util.getNowDateStr(), "제목2", "내용2"));
+        articles.add(new Article(3, Util.getNowDateStr(), "제목3", "내용3"));
+    }
+
+    private static int getArticleIndexById(int id) {
+        int i = 0;
+        for ( Article article : articles ) {
+            if ( article.id == id ) return i;
+            i++;
+        }
+
+        return -1;
+    }
+
+    private static Article getArticleById(int id) {
+        int index = getArticleIndexById(id);
+
+        if ( index != -1 ) {
+            return articles.get(index);
+        }
+
+        return null;
     }
 }
