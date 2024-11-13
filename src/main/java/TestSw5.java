@@ -37,7 +37,7 @@ public class TestSw5 extends JFrame{
         //색상 선택 대화상자 표시
 
         if(selectedColor !=null) { //사용자가 색상을 선택한 경우
-            getContentPane().getBackground(selectedColor);
+            getContentPane().getBackground();
             }
     }
 
