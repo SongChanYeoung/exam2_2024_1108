@@ -6,7 +6,7 @@ public class TestSw extends JFrame{
         //Frame
         setTitle("스윙 프로젝트 연습"); // 프레임 제목 설정
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 클로즈 버튼
-        setSize(500,300); // 프레임 크기 설정
+        setSize(500,200); // 프레임 크기 설정
         setLocationRelativeTo(null); // 화면 중앙에서 시작
 
         // ContentPane
@@ -68,6 +68,15 @@ public class TestSw extends JFrame{
 
         cp.add(colorCombo);
         cp.add(animalCombo);
+
+        // JList
+        String[] fruits = {"Apple", "Banana", "Cherry", "Mango", "Melon", "Strawberry"};
+
+        JList<String> strFList = new JList<>(fruits);
+        JList fList = new JList(fruits);
+
+        cp.add(new JScrollPane(strFList));
+        cp.add(fList);
 
 
         setVisible(true); // 화면에 프레임 출력
