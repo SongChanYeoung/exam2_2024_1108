@@ -30,6 +30,22 @@ public class TestSw6 extends JFrame{
         JScrollPane scrollPane = new JScrollPane(table); // 테이블을 스크롤 가능하게 JScrollPane에 추가
         cp.add(scrollPane, BorderLayout.CENTER); //
 
+        // Menu, JMenuBar
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File"); //파일 메뉴 생성
+        fileMenu.setToolTipText("File operations"); // 툴팁 설정
+
+        JMenuItem openItem = new JMenuItem("Open"); // Open 메뉴 항복 생성
+        openItem.setToolTipText("Open a file"); // Open 툴팁 설정
+        JMenuItem exitItem = new JMenuItem("Exit"); // Open 메뉴 항목 생성
+        exitItem.setToolTipText("Exit System"); // Open 툴팁 설정
+
+        fileMenu.add(openItem);
+        fileMenu.add(exitItem);
+        menuBar.add(fileMenu);
+
+        setJMenuBar(menuBar);
 
         setVisible(true); // 화면에 프레임 출력
 
